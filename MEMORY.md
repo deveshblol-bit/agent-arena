@@ -1,0 +1,191 @@
+# Agent Arena — Development Memory Log
+
+This file tracks daily progress, decisions, and context for the autonomous development workflow.
+Each day's work gets appended here so future sessions know what's been done.
+
+---
+
+## Pre-Hackathon (March 12, 2026)
+
+### Initial Planning
+- **Idea Evolution**: Started with "multi-sig wallets for AI agents" → Pivoted to **Agent Arena** (race-to-solve wager platform)
+- **Concept**: AI agents create challenges with custom wager amounts, other agents browse public board and race to solve, winner takes pot
+- **Tech Stack**: Base (L2), USDC, Solidity smart contracts, Node.js API, agent wallet integration
+
+### Key Decisions Made
+1. **Flexible wager amounts** (not hardcoded) — Creator sets 0.1 to 10,000 USDC
+2. **Public challenge board** — Agents can browse and auto-accept without needing friends
+3. **Problem types** for MVP: Math (factorization, equations), Crypto puzzles (hash preimage), Logic (sudoku)
+4. **Verification**: On-chain smart contract verification (no third-party judge)
+5. **Settlement**: First correct solution wins, timeout = refund both
+
+### Architecture Decisions
+- **Smart Contracts**:
+  - `WagerEscrow.sol` — Holds funds, escrow logic, payout
+  - `MathVerifier.sol` — On-chain math problem verification
+- **API Endpoints**:
+  - `POST /challenges` — Create wager
+  - `GET /challenges` — List open wagers (public board)
+  - `GET /challenges/:id` — Challenge details
+- **Agent Tools**:
+  - `wager_create(problemType, difficulty, amount, timeLimit)`
+  - `wager_browse(filters)` — Search challenges
+  - `wager_accept(challengeId)` — Accept + deposit
+  - `wager_solve(challengeId, solution)` — Submit solution
+
+### Autonomous Workflow Setup
+- Created `synthesis/SCHEDULE.md` — 9-day development plan
+- Created `synthesis/PLAN.md` — Full architecture + tech stack
+- **6 cron jobs scheduled**:
+  1. Daily morning kickoff (8 AM IST)
+  2. Mid-day progress (2 PM IST)
+  3. Evening wrap-up (8 PM IST)
+  4. Daily report to Devesh (9 PM IST)
+  5. Kickoff alert (March 13)
+  6. Final deadline reminder (March 22)
+- Model: Using **Opus** for all hackathon work (high quality)
+
+### Resources Available
+- **Synthesis Hackathon**:
+  - Participant ID: `62c0969d387e482c9fdcc0e8b6b0a65d`
+  - Team ID: `a3f1175a608c4ad197682e8ffd9da454`
+  - API Key: `sk-synth-625abd83656bffbfe9bba0d7715e88ffc48487238edfaa0f`
+  - Registration Txn: https://basescan.org/tx/0xceb07c106191756a5eee9d225c34377bf572e246ac8f29dc072495bcaa0e37d1
+  - Kickoff: March 13, 2026
+  - Deadline: March 22, 2026
+
+- **Base Testnet (Sepolia)**:
+  - Network: Base Sepolia
+  - Chain ID: 84532
+  - RPC: https://sepolia.base.org
+  - Explorer: https://sepolia.basescan.org
+  - **Need for Day 2**: Base Sepolia ETH (for gas) + testnet USDC
+  - Faucets: 
+    - ETH: https://www.alchemy.com/faucets/base-sepolia or ask Devesh
+    - USDC: Ask Devesh or mint from testnet contract
+
+- **Vercel** (for API + Frontend deployment):
+  - Token: (stored securely)
+  - Deploy API on Day 4
+  - Deploy Frontend on Day 8
+
+### Agent Wallet Created (March 12)
+- **Address**: `0x271Dbe229Eb9dDD920CEf2fACFC160ed4C45eD93`
+- **Network**: Base Sepolia (Chain ID: 84532)
+- **Keys**: Stored in `synthesis/wallet/agent.json`
+- **Current Balance**: 0.0491 ETH (Base Sepolia)
+- **Status**: ✅ Funded by Devesh - Ready to deploy contracts on Day 2
+
+### Next Steps (Day 1 - March 13)
+- Set up project structure (contracts/, api/, agent/)
+- Initialize Hardhat
+- Write `WagerEscrow.sol` skeleton
+- Deploy to local Hardhat network
+- First commit by evening
+
+---
+
+## Day 1 (March 13, 2026) — Foundation
+
+### Completed
+- ✅ Project structure set up: `contracts/`, `api/`, `agent/`, `scripts/`, `test/`
+- ✅ Hardhat initialized with Solidity 0.8.24, ethers v6, OpenZeppelin
+- ✅ **WagerEscrow.sol** (203 lines) — Full escrow contract with:
+  - `createChallenge()` — Creator deposits USDC, sets problem params
+  - `acceptChallenge()` — Challenger matches stake
+  - `submitSolution()` — On-chain verification via IVerifier interface
+  - `claimTimeout()` — Refund both parties after timeout
+  - `cancelChallenge()` — Creator cancels unaccepted challenge
+  - Events: ChallengeCreated, ChallengeAccepted, ChallengeSolved, ChallengeTimedOut, ChallengeCancelled
+- ✅ **MathVerifier.sol** (25 lines) — Factorization verifier (checks a*b == target, rejects trivial 1*N)
+- ✅ **MockUSDC.sol** (22 lines) — Test token for local testing
+- ✅ **deploy.js** (41 lines) — Deployment script for all contracts
+- ✅ **WagerEscrow.test.js** (150 lines) — 9 tests, all passing:
+  1. Create challenge + escrow funds
+  2. Revert on zero amount
+  3. Accept + escrow challenger funds
+  4. Revert self-accept
+  5. Pay winner on correct solution
+  6. Revert on wrong solution
+  7. Revert trivial factorization (1*N)
+  8. Refund both after timeout
+  9. Refund creator on cancel
+
+### Code Stats
+- **464 total lines** across contracts, tests, scripts, config
+- **9/9 tests passing** (2s runtime)
+
+### Decisions Made
+- Used OpenZeppelin SafeERC20 for token transfers
+- IVerifier interface pattern allows pluggable verification (math, crypto, logic)
+- Challenge struct stores: creator, challenger, verifier, amount, problemData, timeLimit, status
+- Timeout is relative (block.timestamp based)
+
+### Problems Encountered
+- None — clean Day 1
+
+### Git
+- Commit: `570dd94` — "Day 1: Smart contract foundation — WagerEscrow + MathVerifier + tests (9/9 passing)"
+- Pushed to `deveshblol-bit/zoro-brain` ✅
+
+### Ready for Tomorrow (Day 2)
+- Deploy contracts to Base Sepolia testnet
+- Need testnet ETH (have 0.0491 ETH — should be enough for deployment)
+- Need testnet USDC (ask Devesh or find faucet/mint)
+- Build MathVerifier with more problem types
+- Verify contracts on BaseScan
+
+---
+
+## Day 2 (March 14, 2026) — Smart Contracts + Verification
+*Updates will be added here during evening wrap-up*
+
+---
+
+## Day 3 (March 15, 2026) — Agent Wallets
+*Updates will be added here during evening wrap-up*
+
+---
+
+## Day 4 (March 16, 2026) — Problem Generation
+*Updates will be added here during evening wrap-up*
+
+---
+
+## Day 5 (March 17, 2026) — Agent Tools
+*Updates will be added here during evening wrap-up*
+
+---
+
+## Day 6 (March 18, 2026) — Solve Flow
+*Updates will be added here during evening wrap-up*
+
+---
+
+## Day 7 (March 19, 2026) — Polish + Edge Cases
+*Updates will be added here during evening wrap-up*
+
+---
+
+## Day 8 (March 20, 2026) — Frontend + Docs
+*Updates will be added here during evening wrap-up*
+
+---
+
+## Day 9 (March 21, 2026) — Final Push + Submit
+*Updates will be added here during evening wrap-up*
+
+---
+
+## Blockers & Questions Log
+*Add blockers here as they come up*
+
+---
+
+## Important Links & Credentials
+- GitHub repo: https://github.com/deveshblol-bit/zoro-brain
+- Base Sepolia RPC: (to be added when needed)
+- Contract addresses: (to be added after deployment)
+- API endpoints: (to be added when deployed)
+- Demo video: (to be added)
+- Submission link: (to be added)
