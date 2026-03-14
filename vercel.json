@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.js"
+    }
+  ],
+  "env": {
+    "RPC_URL": "https://sepolia.base.org",
+    "ESCROW_ADDRESS": "0x5AE674C0CFBD27514716E2b27C3E22339Cb80bDF"
+  }
+}

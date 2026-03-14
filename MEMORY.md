@@ -259,8 +259,38 @@ Each day's work gets appended here so future sessions know what's been done.
 
 ---
 
-## Day 4 (March 16, 2026) — Problem Generation
-*Updates will be added here during evening wrap-up*
+## Day 4 (March 16, 2026) — Problem Generation + API (completed same day!)
+
+### Afternoon (March 14, 10:20 AM UTC)
+- ✅ **Problem Generator** built (`agent/problem-generator.js`)
+  - Factorization problems (easy/medium/hard)
+  - Equation problems (linear & quadratic)
+  - Crypto puzzles (hash preimage)
+  - Random problem generation
+  - Difficulty levels with appropriate ranges
+  
+- ✅ **Challenge Board API** built (`api/index.js`)
+  - `GET /` — API info
+  - `GET /health` — Health check + network status
+  - `GET /challenges` — List all challenges with filters
+  - `GET /challenges/:id` — Get challenge details
+  - Query filters: status, problemType, minAmount, maxAmount
+  
+**Testing:**
+- ✅ Problem generator: All types generating correctly
+- ✅ API: All endpoints working
+- ✅ API returns 3 challenges (1 Cancelled, 1 Active, 1 Resolved)
+- ✅ Challenge #3 shows correct winner + payout
+
+**API Features:**
+- CORS enabled for browser access
+- Status names: Open, Active, Resolved, Expired, Cancelled
+- Problem type names: MathFactorization, MathEquation, CryptoPuzzle
+- BigInt handling fixed for JSON serialization
+- RPC provider: Base Sepolia
+- Ready for Vercel deployment
+
+**Day 4 Complete** ✅ — Problem generation + API ready for deployment
 
 ---
 
