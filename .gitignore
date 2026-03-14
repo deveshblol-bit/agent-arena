@@ -5,3 +5,4 @@ typechain-types/
 wallet/
 config.json
 .env
+.vercel

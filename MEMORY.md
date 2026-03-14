@@ -290,7 +290,14 @@ Each day's work gets appended here so future sessions know what's been done.
 - RPC provider: Base Sepolia
 - Ready for Vercel deployment
 
-**Day 4 Complete** ✅ — Problem generation + API ready for deployment
+**API Deployed (March 14, 10:30 AM UTC):**
+- ✅ Deployed to Vercel
+- Production URL: https://agent-arena-fawn.vercel.app
+- All endpoints tested and working ✅
+- Filters working correctly ✅
+- Connected to Base Sepolia testnet ✅
+
+**Day 4 Complete** ✅ — Problem generation + API deployed to production
 
 ---
 
