@@ -138,7 +138,32 @@ Each day's work gets appended here so future sessions know what's been done.
 ---
 
 ## Day 2 (March 14, 2026) — Smart Contracts + Verification
-*Updates will be added here during evening wrap-up*
+
+### Morning (March 14, 7:48 AM UTC)
+- ✅ Cron jobs updated to use `/home/ubuntu/agent-arena/` path
+- ✅ Dependencies installed (581 packages)
+- ✅ **All contracts deployed to Base Sepolia!**
+
+**Deployed Contracts (Base Sepolia):**
+- MockUSDC: `0x638E23b938c8Cdc920eDBDa7021C06e33Ce40E3b`
+- MathVerifier: `0x336c5473ca38F67383aF06FA076E900594eDfC6B`
+- WagerEscrow: `0x5AE674C0CFBD27514716E2b27C3E22339Cb80bDF`
+
+**Contract Verifications:**
+- Verifier registered for ProblemType.MathFactorization (enum 0)
+- 2.5% platform fee configured (250 basis points)
+
+**Deployment Details:**
+- Network: Base Sepolia (Chain ID: 84532)
+- Deployer: `0x271Dbe229Eb9dDD920CEf2fACFC160ed4C45eD93`
+- Gas used: ~0.001 ETH
+- Explorer: https://sepolia.basescan.org/address/0x5AE674C0CFBD27514716E2b27C3E22339Cb80bDF
+
+**Issues encountered:**
+- Multiple nonce conflicts during rapid retries - resolved by waiting for confirmations
+- Created `deploy-remaining.js` to handle partial deployment recovery
+
+**Next:** Contract verification on BaseScan, expand to more problem types
 
 ---
 

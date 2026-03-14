@@ -2,17 +2,11 @@ const hre = require("hardhat");
 
 async function main() {
   const network = hre.network.name;
-  console.log(`Deploying to ${network}...`);
+  console.log(`Deploying remaining contracts to ${network}...`);
 
-  // Deploy MockUSDC (testnet only)
-  const MockUSDC = await hre.ethers.getContractFactory("MockUSDC");
-  const usdc = await MockUSDC.deploy();
-  console.log(`Deploying MockUSDC...`);
-  await usdc.waitForDeployment();
-  const usdcDeployTx = usdc.deploymentTransaction();
-  if (usdcDeployTx) await usdcDeployTx.wait(1);
-  const usdcAddr = await usdc.getAddress();
-  console.log(`MockUSDC deployed: ${usdcAddr}`);
+  // Use the latest MockUSDC deployment
+  const usdcAddr = "0x638E23b938c8Cdc920eDBDa7021C06e33Ce40E3b";
+  console.log(`Using MockUSDC at: ${usdcAddr}`);
 
   // Deploy MathVerifier
   const MathVerifier = await hre.ethers.getContractFactory("MathVerifier");
@@ -20,7 +14,7 @@ async function main() {
   console.log(`Deploying MathVerifier...`);
   await verifier.waitForDeployment();
   const verifierDeployTx = verifier.deploymentTransaction();
-  if (verifierDeployTx) await verifierDeployTx.wait(1);
+  if (verifierDeployTx) await verifierDeployTx.wait(2);
   const verifierAddr = await verifier.getAddress();
   console.log(`MathVerifier deployed: ${verifierAddr}`);
 
@@ -30,14 +24,14 @@ async function main() {
   console.log(`Deploying WagerEscrow...`);
   await escrow.waitForDeployment();
   const escrowDeployTx = escrow.deploymentTransaction();
-  if (escrowDeployTx) await escrowDeployTx.wait(1);
+  if (escrowDeployTx) await escrowDeployTx.wait(2);
   const escrowAddr = await escrow.getAddress();
   console.log(`WagerEscrow deployed: ${escrowAddr}`);
 
   // Register MathVerifier for ProblemType.MathFactorization (0)
   console.log(`Registering MathVerifier...`);
   const registerTx = await escrow.setVerifier(0, verifierAddr);
-  await registerTx.wait(1);
+  await registerTx.wait(2);
   console.log("MathVerifier registered as verifier for MathFactorization");
 
   console.log("\n--- Deployment Summary ---");
