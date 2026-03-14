@@ -15,17 +15,11 @@ async function main() {
   const WagerEscrow = await hre.ethers.getContractFactory("WagerEscrow");
   const escrow = WagerEscrow.attach(escrowAddr);
 
-  // Step 1: Cancel existing challenge to get refund
-  console.log("1. Cancelling existing challenge #1...");
-  const cancelTx = await escrow.cancelChallenge(1);
-  await cancelTx.wait(2);
-  console.log("   Cancelled ✅\n");
-
-  // Check balance
+  // Step 1: Check balance
   let balance = await usdc.balanceOf(deployer.address);
-  console.log(`   Balance: ${hre.ethers.formatUnits(balance, 6)} USDC\n`);
+  console.log(`1. Current balance: ${hre.ethers.formatUnits(balance, 6)} USDC\n`);
 
-  // Step 2: Create a NEW smaller challenge
+  // Step 2: Create a NEW test challenge
   console.log("2. Creating test challenge (1 USDC wager, factor 143)...");
   await usdc.approve(escrowAddr, hre.ethers.parseUnits("100", 6));
   const createTx = await escrow.createChallenge(
@@ -60,17 +54,20 @@ async function main() {
   console.log("   Funded ✅\n");
 
   // Step 6: Accept challenge as challenger
-  console.log("6. Challenger accepting challenge...");
+  console.log("6. Challenger approving USDC...");
   const usdcAsChallenger = usdc.connect(challenger);
-  await usdcAsChallenger.approve(escrowAddr, hre.ethers.parseUnits("10", 6));
+  const approveTx2 = await usdcAsChallenger.approve(escrowAddr, hre.ethers.parseUnits("10", 6));
+  await approveTx2.wait(3);
+  console.log("   Approved ✅");
   
+  console.log("7. Challenger accepting challenge...");
   const escrowAsChallenger = escrow.connect(challenger);
   const acceptTx = await escrowAsChallenger.acceptChallenge(challengeId);
-  await acceptTx.wait(2);
+  await acceptTx.wait(3);
   console.log("   Accepted ✅\n");
 
-  // Step 7: Submit correct solution as challenger
-  console.log("7. Challenger submitting solution (11, 13)...");
+  // Step 8: Submit correct solution as challenger
+  console.log("8. Challenger submitting solution (11, 13)...");
   const solveTx = await escrowAsChallenger.submitSolution(
     challengeId,
     hre.ethers.AbiCoder.defaultAbiCoder().encode(["uint256", "uint256"], [11, 13])
@@ -78,8 +75,8 @@ async function main() {
   await solveTx.wait(2);
   console.log("   Solution verified + payout sent ✅\n");
 
-  // Step 8: Check final balances
-  console.log("8. Final balances:");
+  // Step 9: Check final balances
+  console.log("9. Final balances:");
   const deployerBalance = await usdc.balanceOf(deployer.address);
   const challengerBalance = await usdc.balanceOf(challenger.address);
   const escrowBalance = await usdc.balanceOf(escrowAddr);

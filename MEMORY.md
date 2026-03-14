@@ -165,6 +165,56 @@ Each day's work gets appended here so future sessions know what's been done.
 
 **Next:** Contract verification on BaseScan, expand to more problem types
 
+### Afternoon (March 14, 2:30 PM UTC)
+- ✅ Built & deployed 2 more verifiers:
+  - HashVerifier: `0x08F17313bD4Ef79648153e24e15BE37C46082C23`
+  - EquationVerifier: `0x57436d7C195b7a1aF2eaC0D7A0DF288B96D7aC26`
+- ✅ All 3 problem types registered with WagerEscrow
+- ✅ 15/15 tests passing (expanded from 9)
+- ✅ **FULL END-TO-END FLOW TESTED ON BASE SEPOLIA** 🎉
+
+**Full Flow Test (Challenge #3):**
+- Created challenge: 1 USDC wager, factor 143
+- Challenger accepted: matched with 1 USDC (pot = 2 USDC)
+- Solution submitted: 11 × 13 = 143
+- MathVerifier verified on-chain ✅
+- Winner paid: 1.95 USDC (2 USDC - 2.5% platform fee)
+- Platform fee collected: 0.05 USDC
+- Tx: https://sepolia.basescan.org/tx/0x801013a9e67e180c23709c4cb446523c37cb51a65e26f645d2f7c70cd226ad61
+
+**Critical Bug Found & Fixed:**
+- ❌ Problem data MUST be ABI-encoded, not UTF-8 strings
+- ❌ Challenge #1 & #2 used `toUtf8Bytes("143")` - wrong!
+- ✅ Challenge #3 used `AbiCoder.defaultAbiCoder().encode(["uint256"], [143])` - correct!
+- This is **critical for API/agent integration** - document in API spec
+
+**Problem Types Now Working:**
+1. MathFactorization (verifier: `0x336c5473ca38F67383aF06FA076E900594eDfC6B`)
+2. MathEquation (verifier: `0x57436d7C195b7a1aF2eaC0D7A0DF288B96D7aC26`)
+3. CryptoPuzzle (verifier: `0x08F17313bD4Ef79648153e24e15BE37C46082C23`)
+
+**Commit:** `e894462` + test scripts
+
+### Afternoon (March 14, 8:30 AM UTC)
+- ✅ **HashVerifier.sol** deployed — keccak256 preimage puzzles (CryptoPuzzle type)
+- ✅ **EquationVerifier.sol** deployed — quadratic/linear equation solver (MathEquation type)
+- ✅ All 3 verifiers registered on WagerEscrow contract
+- ✅ **15/15 tests passing** (up from 9)
+- ✅ Commit `e894462` pushed
+
+**New Contract Addresses (Base Sepolia):**
+- HashVerifier: `0x08F17313bD4Ef79648153e24e15BE37C46082C23`
+- EquationVerifier: `0x57436d7C195b7a1aF2eaC0D7A0DF288B96D7aC26`
+
+**Problem Types Now Supported:**
+1. MathFactorization — factor N into p*q (p,q > 1)
+2. MathEquation — solve ax² + bx + c = 0
+3. CryptoPuzzle — find preimage of keccak256 hash
+
+**Note:** BaseScan contract verification needs an API key — flagging for Devesh. Not a blocker.
+
+**Next:** Day 3 — Agent wallet system + transaction signing
+
 ---
 
 ## Day 3 (March 15, 2026) — Agent Wallets
