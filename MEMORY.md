@@ -218,7 +218,44 @@ Each day's work gets appended here so future sessions know what's been done.
 ---
 
 ## Day 3 (March 15, 2026) — Agent Wallets
-*Updates will be added here during evening wrap-up*
+
+### Morning/Afternoon (March 14, 9:40 AM UTC — started early!)
+- ✅ **WalletManager** class built (`agent/wallet-manager.js`)
+  - Create/load wallets with secure key storage
+  - Check ETH + USDC balances
+  - Transfer funds between wallets
+  - List all managed wallets
+  
+- ✅ **ChallengeSigner** class built (`agent/challenge-signer.js`)
+  - Auto-approve USDC before transactions
+  - Create challenges with auto-signing
+  - Accept challenges with auto-signing
+  - Submit solutions with auto-signing
+  - Cancel challenges
+  - Browse/list all challenges
+  
+- ✅ **Agent CLI** tool built (`agent/agent-cli.js`)
+  - `balance` — Check wallet balances
+  - `create-challenge` — Create challenge with ABI encoding
+  - `accept` — Accept a challenge
+  - `solve` — Submit solution with ABI encoding
+  - `list` — Browse all challenges
+  - `cancel` — Cancel a challenge
+  
+**Testing:**
+- ✅ Loaded existing agent wallet (0x271...d93)
+- ✅ Created test challenger wallet (0x12C...14D)
+- ✅ Balance checking working (19.04 ETH, 1,001,998 USDC)
+- ✅ Challenge browsing working (3 challenges listed)
+- ✅ CLI tool functional
+
+**Key Features:**
+- Wallets stored in `wallet/*.json` with private keys
+- Automatic USDC approval before transactions
+- ABI encoding/decoding handled automatically
+- Clean CLI interface for agents to use
+
+**Day 3 Complete** ✅ — Agents can now autonomously manage wallets and sign transactions
 
 ---
 
