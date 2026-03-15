@@ -114,7 +114,10 @@ class AgentTools {
     
     return challenges
       .filter(c => {
-        if (filters.status !== undefined && c.status !== filters.status) return false;
+        if (filters.status !== undefined) {
+          const statusName = STATUS_NAMES[c.status] || `Unknown(${c.status})`;
+          if (statusName !== filters.status) return false;
+        }
         if (filters.problemType !== undefined && c.problemType !== filters.problemType) return false;
         if (filters.minAmount !== undefined && parseFloat(c.wagerAmount) < filters.minAmount) return false;
         if (filters.maxAmount !== undefined && parseFloat(c.wagerAmount) > filters.maxAmount) return false;

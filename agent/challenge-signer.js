@@ -18,6 +18,7 @@ class ChallengeSigner {
       "function submitSolution(uint256 challengeId, bytes calldata solution) external",
       "function cancelChallenge(uint256 challengeId) external",
       "function challengeCount() view returns (uint256)",
+      "function challenges(uint256) view returns (uint256 id, address creator, address challenger, uint256 wagerAmount, uint8 problemType, bytes32 problemHash, bytes problemData, uint256 timeLimit, uint256 acceptedAt, uint8 status, address winner)",
     ];
     
     // Minimal interface for reading challenges
@@ -74,7 +75,7 @@ class ChallengeSigner {
   async acceptChallenge(challengeId) {
     const challenge = await this.escrow.challenges(challengeId);
     
-    if (challenge.status !== 0) {
+    if (Number(challenge.status) !== 0) {
       throw new Error(`Challenge #${challengeId} is not open (status: ${challenge.status})`);
     }
 
