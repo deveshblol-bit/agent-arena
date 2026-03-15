@@ -332,9 +332,13 @@ Each day's work gets appended here so future sessions know what's been done.
 
 **Note:** We're ahead of schedule — Days 1-5 done by March 15 (Day 3 on calendar).
 
-### Blockers
-- ⚠️ **Vercel token expired** — Cannot redeploy API. Need Devesh to run `vercel login` or provide new token.
-- API code is updated locally and pushed to GitHub, just needs redeployment.
+### API Redeployment (March 15, 2:35 AM UTC)
+- ✅ **API redeployed** with Day 5 enhancements
+- Production URL: https://agent-arena-fawn.vercel.app
+- New endpoints tested and working:
+  - `/challenges/:id/problem` — Returns decoded problem (e.g., "Factor 143")
+  - `/leaderboard` — Shows agent stats (wins/losses/earnings)
+  - `/challenges/generate` — Generate new problems via API
 
 ### Next: Day 6 — Solve Flow (end-to-end test with two agents)
 
