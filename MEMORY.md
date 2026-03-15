@@ -344,8 +344,31 @@ Each day's work gets appended here so future sessions know what's been done.
 
 ---
 
-## Day 6 (March 18, 2026) — Solve Flow
-*Updates will be added here during evening wrap-up*
+## Day 6 (March 15, 2026) — Solve Flow ✅
+
+### Morning (March 15, 8:30 AM UTC)
+- ✅ **Two-Agent E2E Test passing on Base Sepolia!**
+- ✅ Created `scripts/test-two-agents.js` — Full automated test
+
+**Bugs Found & Fixed:**
+1. `wager_browse()` status filter compared string "Open" to numeric `0` — fixed to use STATUS_NAMES mapping
+2. `acceptChallenge()` used `challenge.status !== 0` but ethers v6 returns BigInt `0n`, and `0n !== 0` is `true` in JS — fixed to use `Number()`
+3. `challenges()` function missing from escrow ABI in ChallengeSigner — added
+
+**E2E Test Results (Challenge #9):**
+- Agent A creates 1 USDC factorization challenge (factor 793)
+- Agent B browses, finds, accepts (deposits 1 USDC)
+- Agent B solves: 13 × 61 = 793 ✅
+- Winner paid: 1.95 USDC (2.5% platform fee = 0.05 USDC)
+- Agent B net profit: +0.95 USDC
+
+**Also funded challenger wallet:**
+- Sent 0.005 ETH + 100 USDC from agent wallet to challenger wallet
+- Challenger: `0x12C11fD5f1b17e008032E1A1Cd8744BcdfC2614D`
+
+**Commit:** `8a13d93` — pushed to GitHub
+
+### Next: Day 7 — Polish + Edge Cases (error handling, timeout refunds, gas optimization)
 
 ---
 
