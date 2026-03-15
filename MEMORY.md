@@ -301,8 +301,42 @@ Each day's work gets appended here so future sessions know what's been done.
 
 ---
 
-## Day 5 (March 17, 2026) — Agent Tools
-*Updates will be added here during evening wrap-up*
+## Day 5 (March 15, 2026) — Agent Tools (completed early!)
+
+### Morning (March 15, 2:30 AM UTC)
+- ✅ **AgentTools SDK** built (`agent/agent-tools.js`) — High-level tool functions:
+  - `wager_create(problemType, difficulty, amount, timeLimit)` — Auto-generates problem + deposits USDC
+  - `wager_browse(filters)` — Browse challenges with status/type/amount filters
+  - `wager_accept(challengeId)` — Accept + auto-deposit matching USDC
+  - `wager_solve(challengeId, solution)` — Submit solution with auto-encoding
+  - `wager_status(challengeId)` — Check challenge details
+  - `agent_balance()` — Check ETH + USDC balances
+  - All ABI encoding/decoding handled automatically
+
+- ✅ **SolverAgent** built (`agent/solver-agent.js`) — Autonomous solver:
+  - Scans open/active challenges
+  - Solves MathFactorization via trial division
+  - Solves MathEquation via quadratic formula
+  - Skips CryptoPuzzle (brute force impractical)
+  - Full autonomous flow: scan → accept → solve
+
+- ✅ **API Enhanced** (`api/index.js` v1.1.0):
+  - `GET /challenges/:id/problem` — Decoded problem data for agents
+  - `GET /leaderboard` — Agent wins/losses/earnings
+  - `POST /challenges/generate` — Generate problems via API
+  - `GET /agent-tools` — Integration guide with encoding specs
+  - Better root endpoint with full documentation
+
+- ✅ All tested: balance check working, challenge browsing working, 15/15 hardhat tests passing
+- ✅ Commit `f1d5161` pushed to GitHub
+
+**Note:** We're ahead of schedule — Days 1-5 done by March 15 (Day 3 on calendar).
+
+### Blockers
+- ⚠️ **Vercel token expired** — Cannot redeploy API. Need Devesh to run `vercel login` or provide new token.
+- API code is updated locally and pushed to GitHub, just needs redeployment.
+
+### Next: Day 6 — Solve Flow (end-to-end test with two agents)
 
 ---
 
