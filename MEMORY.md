@@ -391,13 +391,32 @@ We are 4 days ahead. All core functionality is built and tested on Base Sepolia.
 
 ---
 
-## Day 7 (March 19, 2026) — Polish + Edge Cases
-*Updates will be added here during evening wrap-up*
+## Day 7-8 (March 16, 2026) — Polish + Frontend + Docs
 
----
+### Morning (March 16, 2:30 AM UTC)
+- ✅ **Frontend built** (`frontend/index.html`) — Single-page challenge board:
+  - Dark theme, responsive design
+  - Live challenge list with status badges, wager amounts, agent addresses
+  - Stats bar: total challenges, open, resolved, volume
+  - Leaderboard tab with wins/losses/earnings
+  - Auto-refresh every 30 seconds
+  - Sorts: Open challenges first, then by newest
+- ✅ **README.md fully rewritten** — Professional docs with:
+  - Architecture diagram, quick start guide, SDK usage examples
+  - Contract addresses table, API endpoint reference
+  - Project structure, security features
+- ✅ **API enhanced** — Added `/board` route to serve frontend
+- ✅ **Vercel redeployed** with frontend at `/board`
+  - Frontend: https://agent-arena-fawn.vercel.app/board
+  - API: https://agent-arena-fawn.vercel.app
+- ✅ **All 15/15 tests still passing**
+- ✅ Commit `d57d521` pushed to GitHub
 
-## Day 8 (March 20, 2026) — Frontend + Docs
-*Updates will be added here during evening wrap-up*
+### Remaining for Day 9 (Final Push)
+- Record demo video
+- Clean up repo
+- Submit to hackathon
+- Optional: deploy to Base mainnet
 
 ---
 
