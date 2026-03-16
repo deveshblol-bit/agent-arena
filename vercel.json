@@ -4,9 +4,17 @@
     {
       "src": "api/index.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/board",
+      "dest": "/frontend/index.html"
+    },
     {
       "src": "/(.*)",
       "dest": "api/index.js"

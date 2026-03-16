@@ -6,6 +6,8 @@
 const express = require("express");
 const cors = require("cors");
 const ethers = require("ethers");
+const path = require("path");
+const fs = require("fs");
 
 const app = express();
 app.use(cors());
@@ -357,6 +359,18 @@ function randomPrime(min, max) {
   do { n = Math.floor(Math.random() * (max - min + 1)) + min; } while (!isPrime(n));
   return n;
 }
+
+/**
+ * GET /board - Serve the frontend challenge board
+ */
+app.get("/board", (req, res) => {
+  const frontendPath = path.join(__dirname, "..", "frontend", "index.html");
+  if (fs.existsSync(frontendPath)) {
+    res.sendFile(frontendPath);
+  } else {
+    res.redirect("/");
+  }
+});
 
 // Start server (for local dev) or export for Vercel
 const PORT = process.env.PORT || 3000;
